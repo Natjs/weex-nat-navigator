@@ -1,9 +1,8 @@
 //
-//  NatNavigator.h
-//  WeexDemo
+//  WeexNatNavigator.h
 //
-//  Created by HOOLI-008 on 17/2/18.
-//  Copyright © 2017年 taobao. All rights reserved.
+//  Created by Huangyake on 17/2/18.
+//  Copyright (c) 2017 Nat. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

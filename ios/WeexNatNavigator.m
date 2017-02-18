@@ -1,10 +1,10 @@
 //
-//  NatNavigator.m
-//  WeexDemo
+//  WeexNatNavigator.m
 //
-//  Created by HOOLI-008 on 17/2/18.
-//  Copyright © 2017年 taobao. All rights reserved.
+//  Created by Huangyake on 17/2/18.
+//  Copyright (c) 2017 Nat. All rights reserved.
 //
+
 
 #import "WeexNatNavigator.h"
 
@@ -120,8 +120,8 @@ WX_EXPORT_METHOD(@selector(show:))
     }
 }
 - (void)init:(NSDictionary *)params :(WXModuleCallback)callback{
-    if (params[@"fontsize"]) {
-        NSInteger fontsize = [params[@"fontsize"] integerValue];
+    if (params[@"fontSize"]) {
+        NSInteger fontsize = [params[@"fontSize"] integerValue];
         
         [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
                 [UIFont systemFontOfSize:fontsize], NSFontAttributeName, nil]];
