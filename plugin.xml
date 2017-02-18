@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<plugin xmlns="http://www.w3.org/ns/widgets"
+    id="nat-navigator"
+    version="0.1.0">
+    <name>nat-navigator</name>
+    <description></description>
+    <license>MIT</license>
+    <keywords>weex,plugin</keywords>
+    <repo>https://github.com/Natjs/weex-nat-navigator.git</repo>
+    <issue>https://github.com/Natjs/weex-nat-navigator/issues</issue>
+     <!-- ios -->
+     <platform name="ios">
+         <config-file target="WeexpluginConfig.xml" parent="/*">
+             <feature name="WXTestModule">
+                 <param name="category" value="module" />
+                 <param name="ios-package" value="WeexNatNavigator" />
+                 <param name="api" value="nat/navigator" />
+             </feature>
+         </config-file>
+         <header-file src="ios/WeexNatNavigator.h"/>
+         <source-file src="ios/WeexNatNavigator.m"/>
+     </platform>
+
+     <!-- android -->
+     <platform name="android">
+
+
+     </platform>
+
+
+
+
+
+</plugin>
