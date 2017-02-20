@@ -1,10 +1,9 @@
 //
-//  WeexNatNavigator.m
+//  NatNavigator.m
 //
 //  Created by Huangyake on 17/2/18.
 //  Copyright (c) 2017 Nat. All rights reserved.
 //
-
 
 #import "WeexNatNavigator.h"
 
@@ -14,10 +13,12 @@ WX_EXPORT_METHOD(@selector(push::))
 WX_EXPORT_METHOD(@selector(pop::))
 WX_EXPORT_METHOD(@selector(setTitle::))
 WX_EXPORT_METHOD(@selector(setColor::))
-WX_EXPORT_METHOD(@selector(setBackgroungColor::))
+WX_EXPORT_METHOD(@selector(setBackgroundColor::))
+WX_EXPORT_METHOD(@selector(setFontSize::))
 WX_EXPORT_METHOD(@selector(init::))
 WX_EXPORT_METHOD(@selector(hide:))
 WX_EXPORT_METHOD(@selector(show:))
+
 
 - (void)push:(NSDictionary *)params :(WXModuleCallback)callback{
     
@@ -29,7 +30,6 @@ WX_EXPORT_METHOD(@selector(show:))
     }else{
         title = @"";
     }
-    
      BOOL animated;
     if (params[@"animated"]) {
         animated = [params[@"animated"] boolValue];
@@ -51,9 +51,6 @@ WX_EXPORT_METHOD(@selector(show:))
     }else{
         nav = vc.navigationController;
     }
-    
-    
-    
     WXBaseViewController *baseVC = [[WXBaseViewController alloc]initWithSourceURL:[NSURL URLWithString:urlStr]];
     baseVC.title = title;
     baseVC.view.backgroundColor = [WeexNatNavigator UIColor:color];
@@ -78,11 +75,9 @@ WX_EXPORT_METHOD(@selector(show:))
 }
 - (void)setTitle:(NSDictionary *)params :(WXModuleCallback)callback{
     UIViewController *vc = [self getCurrentVC];
-    UINavigationController *nav;
+//    UINavigationController *nav;
     if ([vc isKindOfClass:[UINavigationController class]]) {
-        nav = (UINavigationController *)vc;
-    }else{
-        nav = vc.navigationController;
+        vc = [[(UINavigationController *)vc viewControllers] lastObject];
     }
     
     NSString *title;
@@ -92,22 +87,25 @@ WX_EXPORT_METHOD(@selector(show:))
         title = @"";
     }
 
-    nav.title = title;
+    vc.title = title;
 }
 - (void)setColor:(NSDictionary *)params :(WXModuleCallback)callback{
     UIViewController *vc = [self getCurrentVC];
-    UIViewController *nextVC;
+    UINavigationController *nav;
     if ([vc isKindOfClass:[UINavigationController class]]) {
-        nextVC = [[(UINavigationController *)vc viewControllers] lastObject];
+        nav = (UINavigationController *)vc ;
     }else{
-        nextVC = vc;
+        nav = vc.navigationController;
     }
     if (params[@"color"]) {
-        [nextVC.navigationController.navigationBar setBarTintColor:[WeexNatNavigator UIColor:params[@"color"]]];
+        NSMutableDictionary *titleAtt = nav.navigationBar.titleTextAttributes.mutableCopy;
+        [titleAtt setValue:[WeexNatNavigator UIColor:params[@"color"]] forKey:NSForegroundColorAttributeName];
+        [nav.navigationBar setTitleTextAttributes:titleAtt];
     }
     
+    
 }
-- (void)setBackgroungColor:(NSDictionary *)params :(WXModuleCallback)callback{
+- (void)setBackgroundColor:(NSDictionary *)params :(WXModuleCallback)callback{
     UIViewController *vc = [self getCurrentVC];
     UIViewController *nextVC;
     if ([vc isKindOfClass:[UINavigationController class]]) {
@@ -119,21 +117,47 @@ WX_EXPORT_METHOD(@selector(show:))
         [nextVC.navigationController.navigationBar setBarTintColor:[WeexNatNavigator UIColor:params[@"color"]]];
     }
 }
-- (void)init:(NSDictionary *)params :(WXModuleCallback)callback{
+
+- (void)setFontSize:(NSDictionary *)params :(WXModuleCallback)callback{
+    UIViewController *vc = [self getCurrentVC];
+    UINavigationController *nav;
+    if ([vc isKindOfClass:[UINavigationController class]]) {
+        nav = (UINavigationController *)vc ;
+    }else{
+        nav = vc.navigationController;
+    }
     if (params[@"fontSize"]) {
-        NSInteger fontsize = [params[@"fontSize"] integerValue];
-        
-        [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
-                [UIFont systemFontOfSize:fontsize], NSFontAttributeName, nil]];
+        NSMutableDictionary *titleAtt = nav.navigationBar.titleTextAttributes.mutableCopy;
+        [titleAtt setValue:[UIFont systemFontOfSize:[params[@"fontSize"] floatValue]] forKey:NSFontAttributeName];
+        [nav.navigationBar setTitleTextAttributes:titleAtt];
     }
     
-    if (params[@"color"]) {
-        [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
-                    [WXConvert UIColor:params[@"color"]], NSForegroundColorAttributeName, nil]];
+}
+- (void)init:(NSDictionary *)params :(WXModuleCallback)callback{
+    UIViewController *vc = [self getCurrentVC];
+    UINavigationController *nav;
+    if ([vc isKindOfClass:[UINavigationController class]]) {
+        nav = (UINavigationController *)vc;
+        vc = [nav.viewControllers lastObject];
+    }else{
+        nav = vc.navigationController;
+    }
+
+    
+    if (params[@"color"] && params[@"fontSize"]) {
+//        [[UINavigationBar appearance] setTitleTextAttributes:@{
+//                                                               NSForegroundColorAttributeName:[WXConvert UIColor:params[@"color"]]}];
+        
+        [nav.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:[params[@"fontSize"] integerValue]],NSForegroundColorAttributeName:[WXConvert UIColor:params[@"color"]]}];
+    }else if (params[@"color"]){
+        [nav.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[WXConvert UIColor:params[@"color"]]}];
+    }else if (params[@"fontSize"]){
+        [nav.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:[params[@"fontSize"] integerValue]]}];
     }
     
     if (params[@"backgroundColor"]) {
-        [[UINavigationBar appearance] setBarTintColor:[WeexNatNavigator UIColor:params[@"backgroundColor"]]];
+//        [UINavigationBar appearance].barTintColor = [WeexNatNavigator UIColor:params[@"backgroundColor"]];
+        nav.navigationBar.barTintColor = [WeexNatNavigator UIColor:params[@"backgroundColor"]];
     }
     
     if (params[@"backIcon"]) {

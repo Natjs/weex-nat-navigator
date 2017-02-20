@@ -1,5 +1,5 @@
 //
-//  WeexNatNavigator.h
+//  NatNavigator.h
 //
 //  Created by Huangyake on 17/2/18.
 //  Copyright (c) 2017 Nat. All rights reserved.
@@ -16,7 +16,8 @@
 - (void)pop:(NSDictionary *)params :(WXModuleCallback)callback;
 - (void)setTitle:(NSDictionary *)params :(WXModuleCallback)callback;
 - (void)setColor:(NSDictionary *)params :(WXModuleCallback)callback;
-- (void)setBackgroungColor:(NSDictionary *)params :(WXModuleCallback)callback;
+- (void)setBackgroundColor:(NSDictionary *)params :(WXModuleCallback)callback;
+- (void)setFontSize:(NSDictionary *)params :(WXModuleCallback)callback;
 - (void)init:(NSDictionary *)params :(WXModuleCallback)callback;
 - (void)hide:(WXModuleCallback)callback;
 - (void)show:(WXModuleCallback)callback;
