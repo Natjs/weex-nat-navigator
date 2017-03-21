@@ -2,13 +2,16 @@
 
     iOS Only (at present)
 
+- [Documentation](http://natjs.com/#/#navigator)
+- [Github](https://github.com/natjs/weex-nat-navigator)
+
 ## Installation
 ```
 weexpack plugin add nat-navigator
 ```
 
 ```
-npm install weex-nat --save
+npm install natjs --save
 ```
 
 ## Usage
@@ -17,7 +20,7 @@ Use in weex file (.we)
 
 ```html
 <script>
-import 'Nat' from 'weex-nat'
+import 'Nat' from 'natjs'
 
 Nat.navigator.init({
     fontSize: 24,
