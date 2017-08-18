@@ -13,7 +13,7 @@
     <!-- ios -->
     <platform name="ios">
         <config-file target="WeexpluginConfig.xml" parent="/*">
-            <feature name="WXTestModule">
+            <feature name="WeexNatNavigator">
                 <param name="category" value="module" />
                 <param name="ios-package" value="WeexNatNavigator" />
                 <param name="api" value="nat/navigator" />

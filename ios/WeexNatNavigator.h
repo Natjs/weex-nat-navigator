@@ -2,7 +2,7 @@
 //  NatNavigator.h
 //
 //  Created by Huangyake on 17/2/18.
-//  Copyright (c) 2017 Nat. All rights reserved.
+//  Copyright (c) 2017 Instapp. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

@@ -2,13 +2,14 @@
 //  NatNavigator.m
 //
 //  Created by Huangyake on 17/2/18.
-//  Copyright (c) 2017 Nat. All rights reserved.
+//  Copyright (c) 2017 Instapp. All rights reserved.
 //
 
 #import "WeexNatNavigator.h"
 
 
 @implementation WeexNatNavigator
+@synthesize weexInstance;
 WX_EXPORT_METHOD(@selector(push::))
 WX_EXPORT_METHOD(@selector(pop::))
 WX_EXPORT_METHOD(@selector(setTitle::))
