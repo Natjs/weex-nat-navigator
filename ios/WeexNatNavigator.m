@@ -25,13 +25,13 @@ WX_EXPORT_METHOD(@selector(show:))
     
     
     NSString *urlStr = params[@"url"];
-     NSString *title;
+    NSString *title;
     if (params[@"title"]) {
         title = params[@"title"];
     }else{
         title = @"";
     }
-     BOOL animated;
+    BOOL animated;
     if (params[@"animated"]) {
         animated = [params[@"animated"] boolValue];
     }else{
@@ -56,7 +56,7 @@ WX_EXPORT_METHOD(@selector(show:))
     baseVC.title = title;
     baseVC.view.backgroundColor = [WeexNatNavigator UIColor:color];
     [nav pushViewController:baseVC animated:animated];
-    
+    callback(nil);
 }
 - (void)pop:(NSDictionary *)params :(WXModuleCallback)callback{
     UIViewController *vc = [self getCurrentVC];
@@ -73,10 +73,30 @@ WX_EXPORT_METHOD(@selector(show:))
         animated = YES;
     }
     [nav popViewControllerAnimated:animated];
+    callback(nil);
 }
+
+- (void)popToRoot:(NSDictionary *)params :(WXModuleCallback)callback{
+    UIViewController *vc = [self getCurrentVC];
+    UINavigationController *nav;
+    BOOL animated;
+    if ([vc isKindOfClass:[UINavigationController class]]) {
+        nav = (UINavigationController *)vc;
+    }else{
+        nav = vc.navigationController;
+    }
+    if (params[@"animated"]) {
+        animated = [params[@"animated"] boolValue];
+    }else{
+        animated = YES;
+    }
+    [nav popToRootViewControllerAnimated:animated];
+    callback(nil);
+}
+
 - (void)setTitle:(NSDictionary *)params :(WXModuleCallback)callback{
     UIViewController *vc = [self getCurrentVC];
-//    UINavigationController *nav;
+    //    UINavigationController *nav;
     if ([vc isKindOfClass:[UINavigationController class]]) {
         vc = [[(UINavigationController *)vc viewControllers] lastObject];
     }
@@ -87,7 +107,7 @@ WX_EXPORT_METHOD(@selector(show:))
     }else{
         title = @"";
     }
-
+    
     vc.title = title;
 }
 - (void)setColor:(NSDictionary *)params :(WXModuleCallback)callback{
@@ -143,11 +163,11 @@ WX_EXPORT_METHOD(@selector(show:))
     }else{
         nav = vc.navigationController;
     }
-
+    
     
     if (params[@"color"] && params[@"fontSize"]) {
-//        [[UINavigationBar appearance] setTitleTextAttributes:@{
-//                                                               NSForegroundColorAttributeName:[WXConvert UIColor:params[@"color"]]}];
+        //        [[UINavigationBar appearance] setTitleTextAttributes:@{
+        //                                                               NSForegroundColorAttributeName:[WXConvert UIColor:params[@"color"]]}];
         
         [nav.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:[params[@"fontSize"] integerValue]],NSForegroundColorAttributeName:[WXConvert UIColor:params[@"color"]]}];
     }else if (params[@"color"]){
@@ -157,7 +177,7 @@ WX_EXPORT_METHOD(@selector(show:))
     }
     
     if (params[@"backgroundColor"]) {
-//        [UINavigationBar appearance].barTintColor = [WeexNatNavigator UIColor:params[@"backgroundColor"]];
+        //        [UINavigationBar appearance].barTintColor = [WeexNatNavigator UIColor:params[@"backgroundColor"]];
         nav.navigationBar.barTintColor = [WeexNatNavigator UIColor:params[@"backgroundColor"]];
     }
     
@@ -470,3 +490,4 @@ WX_EXPORT_METHOD(@selector(show:))
 }
 
 @end
+

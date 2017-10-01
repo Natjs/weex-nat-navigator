@@ -14,6 +14,7 @@
 
 - (void)push:(NSDictionary *)params :(WXModuleCallback)callback;
 - (void)pop:(NSDictionary *)params :(WXModuleCallback)callback;
+- (void)popToRoot:(NSDictionary *)params :(WXModuleCallback)callback;
 - (void)setTitle:(NSDictionary *)params :(WXModuleCallback)callback;
 - (void)setColor:(NSDictionary *)params :(WXModuleCallback)callback;
 - (void)setBackgroundColor:(NSDictionary *)params :(WXModuleCallback)callback;
