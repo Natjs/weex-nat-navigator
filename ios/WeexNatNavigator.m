@@ -7,11 +7,11 @@
 
 #import "WeexNatNavigator.h"
 
-
 @implementation WeexNatNavigator
 @synthesize weexInstance;
 WX_EXPORT_METHOD(@selector(push::))
 WX_EXPORT_METHOD(@selector(pop::))
+WX_EXPORT_METHOD(@selector(popToRoot::))
 WX_EXPORT_METHOD(@selector(setTitle::))
 WX_EXPORT_METHOD(@selector(setColor::))
 WX_EXPORT_METHOD(@selector(setBackgroundColor::))
@@ -22,56 +22,63 @@ WX_EXPORT_METHOD(@selector(show:))
 
 
 - (void)push:(NSDictionary *)params :(WXModuleCallback)callback{
-    
-    
     NSString *urlStr = params[@"url"];
     NSString *title;
+    BOOL animated;
+    NSString *color;
+    
     if (params[@"title"]) {
         title = params[@"title"];
-    }else{
+    } else {
         title = @"";
     }
-    BOOL animated;
+    
     if (params[@"animated"]) {
         animated = [params[@"animated"] boolValue];
-    }else{
+    } else {
         animated = YES;
     }
     
-    NSString *color;
     if (!params[@"color"]) {
         color = @"#ffffff";
-    }else{
+    } else {
         color = params[@"color"];
     }
     
     UIViewController *vc = [self getCurrentVC];
     UINavigationController *nav;
+    
     if ([vc isKindOfClass:[UINavigationController class]]) {
         nav = (UINavigationController *)vc;
-    }else{
+    } else {
         nav = vc.navigationController;
     }
+    
     WXBaseViewController *baseVC = [[WXBaseViewController alloc]initWithSourceURL:[NSURL URLWithString:urlStr]];
     baseVC.title = title;
     baseVC.view.backgroundColor = [WeexNatNavigator UIColor:color];
+    
     [nav pushViewController:baseVC animated:animated];
     callback(nil);
 }
+
 - (void)pop:(NSDictionary *)params :(WXModuleCallback)callback{
     UIViewController *vc = [self getCurrentVC];
     UINavigationController *nav;
     BOOL animated;
+    
     if ([vc isKindOfClass:[UINavigationController class]]) {
         nav = (UINavigationController *)vc;
-    }else{
+    } else {
         nav = vc.navigationController;
     }
+    
     if (params[@"animated"]) {
         animated = [params[@"animated"] boolValue];
-    }else{
+    } else {
         animated = YES;
     }
+    
     [nav popViewControllerAnimated:animated];
     callback(nil);
 }
@@ -80,16 +87,19 @@ WX_EXPORT_METHOD(@selector(show:))
     UIViewController *vc = [self getCurrentVC];
     UINavigationController *nav;
     BOOL animated;
+    
     if ([vc isKindOfClass:[UINavigationController class]]) {
         nav = (UINavigationController *)vc;
-    }else{
+    } else {
         nav = vc.navigationController;
     }
+    
     if (params[@"animated"]) {
         animated = [params[@"animated"] boolValue];
-    }else{
+    } else {
         animated = YES;
     }
+    
     [nav popToRootViewControllerAnimated:animated];
     callback(nil);
 }
@@ -104,7 +114,7 @@ WX_EXPORT_METHOD(@selector(show:))
     NSString *title;
     if (params[@"title"]) {
         title = params[@"title"];
-    }else{
+    } else {
         title = @"";
     }
     
@@ -115,7 +125,7 @@ WX_EXPORT_METHOD(@selector(show:))
     UINavigationController *nav;
     if ([vc isKindOfClass:[UINavigationController class]]) {
         nav = (UINavigationController *)vc ;
-    }else{
+    } else {
         nav = vc.navigationController;
     }
     if (params[@"color"]) {
@@ -131,7 +141,7 @@ WX_EXPORT_METHOD(@selector(show:))
     UIViewController *nextVC;
     if ([vc isKindOfClass:[UINavigationController class]]) {
         nextVC = [[(UINavigationController *)vc viewControllers] lastObject];
-    }else{
+    } else {
         nextVC = vc;
     }
     if (params[@"color"]) {
@@ -144,7 +154,7 @@ WX_EXPORT_METHOD(@selector(show:))
     UINavigationController *nav;
     if ([vc isKindOfClass:[UINavigationController class]]) {
         nav = (UINavigationController *)vc ;
-    }else{
+    } else {
         nav = vc.navigationController;
     }
     if (params[@"fontSize"]) {
@@ -160,7 +170,7 @@ WX_EXPORT_METHOD(@selector(show:))
     if ([vc isKindOfClass:[UINavigationController class]]) {
         nav = (UINavigationController *)vc;
         vc = [nav.viewControllers lastObject];
-    }else{
+    } else {
         nav = vc.navigationController;
     }
     
@@ -200,7 +210,7 @@ WX_EXPORT_METHOD(@selector(show:))
     UINavigationController *nav;
     if ([vc isKindOfClass:[UINavigationController class]]) {
         nav = (UINavigationController *)vc;
-    }else{
+    } else {
         nav = vc.navigationController;
     }
     [nav setNavigationBarHidden:YES];
@@ -210,7 +220,7 @@ WX_EXPORT_METHOD(@selector(show:))
     UINavigationController *nav;
     if ([vc isKindOfClass:[UINavigationController class]]) {
         nav = (UINavigationController *)vc;
-    }else{
+    } else {
         nav = vc.navigationController;
     }
     [nav setNavigationBarHidden:NO];
