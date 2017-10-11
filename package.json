@@ -1,19 +1,18 @@
 {
-  "name": "nat-navigator",
-  "version": "0.1.7",
-  "description": "Nat.js module: navigator",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "Nat",
-    "navigator",
-    "navigation",
-    "Weex",
-    "Plugin",
-    "module",
-    "handle"
-  ],
-  "author": "Acathur",
-  "license": "MIT"
+    "version": "0.2.1",
+    "platform": [
+        "ios",
+        "android"
+    ],
+    "description": "Nat.js module: Navigator",
+    "keywords": [
+        "weex",
+        "plugin",
+        "nat",
+        "natjs",
+        "navigator",
+        "navigation"
+    ],
+    "license": "MIT",
+    "name": "nat-navigator"
 }

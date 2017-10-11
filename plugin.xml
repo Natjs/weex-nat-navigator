@@ -2,7 +2,7 @@
 
 <plugin xmlns="http://www.w3.org/ns/widgets"
     id="nat-navigator"
-    version="0.1.7">
+    version="0.2.1">
     <name>nat-navigator</name>
     <description>Nat.js module: Navigator</description>
     <license>MIT</license>
@@ -21,6 +21,20 @@
         </config-file>
         <header-file src="ios/WeexNatNavigator.h"/>
         <source-file src="ios/WeexNatNavigator.m"/>
+    </platform>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="config.xml" parent="/*">
+            <feature name="Navigator">
+                <param name="category" value="module" />
+                <param name="android-package" value="com.instapp.nat.weex.Navigator" />
+                <param name="api" value="nat/navigator" />
+            </feature>
+        </config-file>
+
+        <source-file src="android/Navigator.java" target-dir="src/com/instapp/nat/weex/navigator" />
+        <source-file src="android/CacheActivity.java" target-dir="src/com/instapp/nat/weex/navigator" />
     </platform>
 
 </plugin>
