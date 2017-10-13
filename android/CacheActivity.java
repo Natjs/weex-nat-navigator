@@ -22,6 +22,14 @@ public class CacheActivity {
         }
     }
 
+    public static void removeActivity(Activity activity) {
+        if (activity != null) {
+            if (activityList.contains(activity)) {
+                activityList.remove(activity);
+            }
+        }
+    }
+
     public static void finishActivity() {
         for (Activity activity : activityList) {
             activity.finish();
@@ -29,9 +37,11 @@ public class CacheActivity {
     }
     
     public static void finishActivityExceptRoot() {
-        for (int i = 0; i < activityList.size(); i++) {
+        for (int i = activityList.size() - 1; i >= 0; i--) {
             if (i > 0) {
-                activityList.get(i).finish();
+                Activity activity = activityList.get(i);
+                activityList.remove(activity);
+                activity.finish();
             }
         }
     }

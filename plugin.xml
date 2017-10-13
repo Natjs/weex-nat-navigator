@@ -2,7 +2,7 @@
 
 <plugin xmlns="http://www.w3.org/ns/widgets"
     id="nat-navigator"
-    version="0.2.1">
+    version="0.2.2">
     <name>nat-navigator</name>
     <description>Nat.js module: Navigator</description>
     <license>MIT</license>
